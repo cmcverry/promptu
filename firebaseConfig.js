@@ -4,7 +4,6 @@ import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
 
 // App's Firebase configuration
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCDezXJxA49Xa14giocbmt679GXi6W1254",
   authDomain: "promptu-4f001.firebaseapp.com",
