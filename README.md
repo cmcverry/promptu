@@ -1,7 +1,7 @@
 ## promptu is a simple cross-platform anonymous social app 
 
 ### promptu supports web and Android.
-### Promptu was built using This site was built using [Firebase](https://firebase.google.com/) and [React Native](https://reactnative.dev/)
+### Promptu was built using [Firebase](https://firebase.google.com/) and [React Native](https://reactnative.dev/)
 
 #### Features:
 -anonymous user authentication
