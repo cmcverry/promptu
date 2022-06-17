@@ -101,7 +101,7 @@ const Topic = ({ route }) => {
     return (
             <View style={styles.container}> 
                 <Text style={styles.usernameStyle}>Username: {username}</Text>
-                <Text style={styles.title}>Talk</Text>
+                <Text style={styles.title}>Prompt:</Text>
                 <View style={styles.promptContainer}>
                     <Text style={styles.text}>{prompt}
                     {"\n"}
