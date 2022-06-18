@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import styles from './styles';
 import { getAuth, updateProfile} from "firebase/auth";
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
-import fb from '../../firebaseConfig.js';
+import fb from '../../setup.js';
 
 const db = getFirestore(fb);
 const auth = getAuth();

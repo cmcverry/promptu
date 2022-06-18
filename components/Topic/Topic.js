@@ -3,7 +3,7 @@ import {Pressable, Alert, View, Text, FlatList, StatusBar, Modal, TextInput } fr
 import styles from './styles';
 import Comment from '../Comment/Comment'
 import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc} from 'firebase/firestore';
-import fb from '../../firebaseConfig.js';
+import fb from '../../setup.js';
 import { getAuth} from "firebase/auth";
 
 const db = getFirestore(fb);

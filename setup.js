@@ -2,16 +2,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
+import { fbConfig } from "./config"
 
 // App's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCDezXJxA49Xa14giocbmt679GXi6W1254",
-  authDomain: "promptu-4f001.firebaseapp.com",
-  projectId: "promptu-4f001",
-  storageBucket: "promptu-4f001.appspot.com",
-  messagingSenderId: "1095720355013",
-  appId: "1:1095720355013:web:f70794dc83df76bc679cac"
-};
+const firebaseConfig = fbConfig;
 
 // Initialize Firebase
 const fb = initializeApp(firebaseConfig);

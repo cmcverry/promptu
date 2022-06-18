@@ -3,7 +3,7 @@ import {View, Text, FlatList, StatusBar, Pressable} from 'react-native';
 import styles from './styles';
 import Prompt from '../Prompt';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
-import fb from '../../firebaseConfig.js';
+import fb from '../../setup.js';
 import { getAuth} from "firebase/auth";
 
 const db = getFirestore(fb);

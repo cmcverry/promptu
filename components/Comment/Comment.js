@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {View, Text, TouchableOpacity, Modal, Pressable} from 'react-native';
 import { getAuth } from "firebase/auth";
 import styles from './styles';
-import fb from '../../firebaseConfig.js';
+import fb from '../../setup.js';
 import { getFirestore, doc, getDoc, updateDoc, setDoc, increment } from 'firebase/firestore';
 import { AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 
