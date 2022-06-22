@@ -58,43 +58,39 @@ exports.scheduledResetDB = functions.pubsub.schedule("0 0 * * *")
 
       // Hardcoded prompts
       const prompts = [
-        {"prompt": "Representative for Kyiv has urged the United Nations'\n" +
-         "top court to order Russia to halt its devastating invasion of\n" +
-          "Ukraine, at a hearing snubbed by Russia",
-        "hashtags": "#WarInUkraine #WorldPolitics #Government"},
-        {"prompt": "China is calling Russia its 'most important strategic\n" +
-         "partner' as Beijing continues to refuse to condemn the invasion\n" +
-         "of Ukraine despite growing pressure from the U.S. and EU to use\n" +
-         "its influence to urge Moscow to pull back",
-        "hashtags": "#China #Russian #WorldPolitics"},
-        {"prompt": "The death toll from COVID-19 has surpassed 6 million",
-          "hashtags": "#COVID-19 #Pandemic #WorldNews"},
-        {"prompt": "The NHL has unveiled a new logo for the Stanley Cup\n" +
-         "playoffs and Final that replaces the one used for the last 13 years",
-        "hashtags": "#Sports #NHL #Hockey"},
-        {"prompt": "Should hate speech be protected by the first amendment",
-          "hashtags": "#Controversial #Social #USAGovernment #Politics"},
-        {"prompt": "Should a business be able to deny service to a customer\n" +
-         "if the request conflicts with the owner's religious beliefs?",
-        "hashtags": "#Social #Politics #Controversial"},
+        {"prompt": "Which is your favorite animal, and why?",
+          "hashtags": "#Animals #Cute #FavoriteThing"},
+        {"prompt": "If someone gave you 20 dollars, what would you buy "+
+        "with it?",
+        "hashtags": "#Money #PersonalFinance #WhatIf"},
+        {"prompt": "What are the top three things on your bucket list?",
+          "hashtags": "#PersonalGrowth #Goals #Top3List"},
+        {"prompt": "What's one movie you could watch over and over?",
+          "hashtags": "#Movies #FavoriteThing"},
+        {"prompt": "If you could only pack three things for a trip (besides "+
+        "clothing) what would it be?",
+        "hashtags": "#Trips #Vacation #Top3List #WhatIf"},
+        {"prompt": "What's the strangest question you have been asked in "+
+        "a job interview?",
+        "hashtags": "#Work #JobSearch"},
         {"prompt": "Who is the most powerful DC comic book villan?",
-          "hashtags": "#Superhero #GraphicNovel #DCComics"},
+          "hashtags": "#Superhero #GraphicNovel #DC"},
         {"prompt": "Who is the weakest Marvel superhero?",
-          "hashtags": "#SuperHero #GraphicNovel #DCComics"},
-        {"prompt": "Pete Davidson in talks to head to space on\n" +
-         "Jeff Bezos' Blue Origin flight",
-        "hashtags": "#Celebrity #PeteDavidson #JeffBezos #BlueOrigin"},
-        {"prompt": "Walking Dead' walks on with 'Isle of the Dead' spinoff\n" +
-         "starring Maggie and Negan in Manhattan",
-        "hashtags": "#TV #WalkingDead #Entertainment"},
-        {"prompt": "If you could choose to have any superpower, which\n" +
-         "one would you choose?",
-        "hashtags": "#Superhero #Fun"},
+          "hashtags": "#SuperHero #GraphicNovel #DC"},
+        {"prompt": "How would you spend your winnings if you won the" +
+        " lottery?",
+        "hashtags": "#Money #PersonalFinance #WhatIf"},
+        {"prompt": "If you were stranded on an island for eternity" +
+        " name three books you would need in your possession.",
+        "hashtags": "#Hypothetical #WhatIf #Top3List"},
+        {"prompt": "If you could choose to have any superpower, which" +
+        " one would you choose?",
+        "hashtags": "#Superhero #Fun #WhatIf"},
         {"prompt": "Dogs or Cats? Which is the better pet?",
           "hashtags": "#Animals #Cute #Fun"},
-        {"prompt": "Thousands of acres near Panama City are torched\n" +
-         "as Florida Panhandle wildfires continue",
-        "hashtags": "#USANews #Florida #Wildfires"},
+        {"prompt": "If you could live anywhere in the world,"+
+        " where would you choose?",
+        "hashtags": "#WhatIf #Lifestyle #Places"},
       ];
 
       /**
