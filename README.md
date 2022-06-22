@@ -13,4 +13,4 @@
 
 ####  To use promptu, navigate to the app's URL or download the APK and open it on an Android emulator or physical device
 [App URL](https://promptu-4f001.web.app/)
-[APK Download](https://drive.google.com/file/d/1VfMS8bDTeDuh7ESWg0Kgiin9kdXGl1Og/view?usp=sharing)
+[APK Download](https://drive.google.com/file/d/10PTylO4mwSgMKSeeRiu1iO-cOr5NsQ_3/view?usp=sharing)
