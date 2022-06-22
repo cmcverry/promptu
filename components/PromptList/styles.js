@@ -7,18 +7,18 @@ const styles = StyleSheet.create({
     },
 
     usernameStyle: {
-        alignSelf: 'flex-end',
+        textAlign: "center",
         padding: 10,
         fontFamily: 'monospace',
-        fontSize: 20,
+        fontSize: 15,
     },
 
     title: {
-        marginTop: '3%',
+        marginTop: '1%',
         width: '100%',
         textAlign: "center",
         fontFamily: 'monospace',
-        fontSize: 60,
+        fontSize: 40,
         fontWeight: '500'
     },
 });

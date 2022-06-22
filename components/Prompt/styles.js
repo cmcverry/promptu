@@ -3,8 +3,9 @@ import { StyleSheet, Dimensions } from "react-native";
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        padding: 40,
+        padding: 20
     },
+
     button: {
         backgroundColor: 'white',
         width: Dimensions.get('window').width * .7,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
         fontFamily: 'monospace',
         color: '#808080',
         fontSize: 12,
-        fontWeight: '500',
+        fontWeight: '500'
     }
 
 });

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#637CAC',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
 
     title: {
@@ -22,21 +22,10 @@ const styles = StyleSheet.create({
       width: '100%',
       textAlign: "center",
       fontFamily: 'monospace',
-      fontSize: 30,
+      fontSize: 15,
       fontWeight: '500'
-  },
-
-    inputStyles: {
-
-
     },
 
-    userbutton: {
-    },
-
-
- 
-  
     input: {
       height: 35,
       width: 260,
@@ -44,11 +33,9 @@ const styles = StyleSheet.create({
       marginBottom: 20,
       borderWidth: 1,
       padding: 5,
-
       backgroundColor: "white",
       fontFamily: 'monospace'
     },
-  
   });
 
   export default styles;

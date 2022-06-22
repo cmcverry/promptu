@@ -6,12 +6,9 @@ import fb from '../../setup.js';
 import { getFirestore, doc, getDoc, updateDoc, setDoc, increment } from 'firebase/firestore';
 import { AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 
-
 const db = getFirestore(fb);
 
-
 const Comment = (props) => {
-
     // props passed from Topic
     let {username, upvotes, bestBadges, worstBadges, body, commentId, listId} = props.comment;
 
@@ -75,7 +72,6 @@ const Comment = (props) => {
     // called everytime a comment is rendered
     checkBadges(); 
     checkComment();
-
 
     // User action: toggles a comment to be hidden
     const hideComment = async () => {
@@ -182,7 +178,6 @@ const Comment = (props) => {
 
     }
 
-
     // User action: adds "Worst Badge" to comment (limited to 1 badge per prompt)
     const incrementWorstBadge = async () => {
         const commentPath = "comments/prompt"+listId+"/userComments";
@@ -263,7 +258,6 @@ const Comment = (props) => {
         }
     }
 
-      
     return (
         <View style={styles.commentContainer}>
             

@@ -11,9 +11,7 @@ const Prompt = (props) => {
                 {"\n"}
                 {"\n"}
                 <Text style={styles.hashtags}>{hashtags}</Text>
-                </Text>
-                
-                
+                </Text>            
             </View>
         </View>
     );

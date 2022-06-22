@@ -58,42 +58,42 @@ exports.scheduledResetDB = functions.pubsub.schedule("0 0 * * *")
 
       // Hardcoded prompts
       const prompts = [
-        {"prompt": `Representative for Kyiv has urged the United Nations'
-         top court to order Russia to halt its devastating invasion of
-          Ukraine, at a hearing snubbed by Russia`,
+        {"prompt": "Representative for Kyiv has urged the United Nations'\n" +
+         "top court to order Russia to halt its devastating invasion of\n" +
+          "Ukraine, at a hearing snubbed by Russia",
         "hashtags": "#WarInUkraine #WorldPolitics #Government"},
-        {"prompt": `China is calling Russia its 'most important strategic
-         partner' as Beijing continues to refuse to condemn the invasion
-         of Ukraine despite growing pressure from the U.S. and EU to use
-         its influence to urge Moscow to pull back`,
+        {"prompt": "China is calling Russia its 'most important strategic\n" +
+         "partner' as Beijing continues to refuse to condemn the invasion\n" +
+         "of Ukraine despite growing pressure from the U.S. and EU to use\n" +
+         "its influence to urge Moscow to pull back",
         "hashtags": "#China #Russian #WorldPolitics"},
         {"prompt": "The death toll from COVID-19 has surpassed 6 million",
           "hashtags": "#COVID-19 #Pandemic #WorldNews"},
-        {"prompt": `The NHL has unveiled a new logo for the Stanley Cup
-         playoffs and Final that replaces the one used for the last 13 years`,
+        {"prompt": "The NHL has unveiled a new logo for the Stanley Cup\n" +
+         "playoffs and Final that replaces the one used for the last 13 years",
         "hashtags": "#Sports #NHL #Hockey"},
         {"prompt": "Should hate speech be protected by the first amendment",
           "hashtags": "#Controversial #Social #USAGovernment #Politics"},
-        {"prompt": `Should a business be able to deny service to a customer
-         if the request conflicts with the owner's religious beliefs?`,
+        {"prompt": "Should a business be able to deny service to a customer\n" +
+         "if the request conflicts with the owner's religious beliefs?",
         "hashtags": "#Social #Politics #Controversial"},
         {"prompt": "Who is the most powerful DC comic book villan?",
           "hashtags": "#Superhero #GraphicNovel #DCComics"},
         {"prompt": "Who is the weakest Marvel superhero?",
           "hashtags": "#SuperHero #GraphicNovel #DCComics"},
-        {"prompt": `Pete Davidson in talks to head to space on
-         Jeff Bezos' Blue Origin flight`,
+        {"prompt": "Pete Davidson in talks to head to space on\n" +
+         "Jeff Bezos' Blue Origin flight",
         "hashtags": "#Celebrity #PeteDavidson #JeffBezos #BlueOrigin"},
-        {"prompt": `Walking Dead' walks on with 'Isle of the Dead' spinoff
-         starring Maggie and Negan in Manhattan`,
+        {"prompt": "Walking Dead' walks on with 'Isle of the Dead' spinoff\n" +
+         "starring Maggie and Negan in Manhattan",
         "hashtags": "#TV #WalkingDead #Entertainment"},
-        {"prompt": `If you could choose to have any superpower, which
-         one would you choose?`,
+        {"prompt": "If you could choose to have any superpower, which\n" +
+         "one would you choose?",
         "hashtags": "#Superhero #Fun"},
         {"prompt": "Dogs or Cats? Which is the better pet?",
           "hashtags": "#Animals #Cute #Fun"},
-        {"prompt": `Thousands of acres near Panama City are torched
-         as Florida Panhandle wildfires continue`,
+        {"prompt": "Thousands of acres near Panama City are torched\n" +
+         "as Florida Panhandle wildfires continue",
         "hashtags": "#USANews #Florida #Wildfires"},
       ];
 

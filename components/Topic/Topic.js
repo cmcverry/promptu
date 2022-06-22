@@ -28,14 +28,13 @@ const Topic = ({ route }) => {
 
 
     // Disables reply button for 5 seconds after user submit's a comment
-    const disableReply = async (text, username) => {
+    const disableReply = (text, username) => {
         addComment(text, username);
         setReplyColor("#808080");
         setDisabled(true);
         setTimeout(() => {setDisabled(false); setReplyColor("#2196F3");}, 5000);
         setModalVisible(!modalVisible);
     };
-
 
     // Retrieves all comments for a prompt
     const getComments = async (listId) => {
@@ -48,7 +47,7 @@ const Topic = ({ route }) => {
         snapshot.forEach((doc) => {
             let commentId = doc.id;
             comments.push({...doc.data(), commentId, listId})
-        })
+        });
         if (comments == []) {
             const badgeLimitPath = "users/"+auth.currentUser.uid+"/badgeLimit";
             const badgeLimitRef = doc(db, badgeLimitPath, listId.toString());
@@ -60,10 +59,8 @@ const Topic = ({ route }) => {
                 });
             }
         }
-
         setIsLoading(false);
         setList(...listState, comments) 
-
     };
 
 
@@ -98,75 +95,73 @@ const Topic = ({ route }) => {
     if (firstLoad) {
         return <Text>Loading comments...</Text>
     }
+
     return (
-            <View style={styles.container}> 
-                <Text style={styles.usernameStyle}>Username: {username}</Text>
-                <Text style={styles.title}>Prompt:</Text>
-                <View style={styles.promptContainer}>
-                    <Text style={styles.text}>{prompt}
-                    {"\n"}
-                    {"\n"}
-                    <Text style={styles.hashtags}>{hashtags}</Text>
-                    </Text>
-                    <Pressable
-                        disabled={disabled}
-                        backgroundColor= {"#2196F3"}
-                        style={{
-                            borderRadius: 20,
-                            padding: 10,
-                            elevation: 2,
-                            marginBottom: 20,
-                            alignSelf: "flex-end",
-                            right: 10,
-                            backgroundColor: replyColor
-                        }}
-                        onPress={() => setModalVisible(true)}
-                    >
-                        <Text style={styles.textStyle}>Reply</Text>
-                    </Pressable>           
-                </View>
-                
-                <View style={styles.centeredView}>
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                        }}
-                    >
-                        <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <TextInput
-                            style={styles.input}
-                            placeholder={"Share your thoughts!"}
-                            onChangeText={onChangeText}
-                            value={text}
-                            multiline = {true}
-                            numberOfLines = {10}
-                            maxLength={255}
-                            />
-                            <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() =>disableReply(text, username)}
-                            >
-                            <Text style={styles.textStyle}>Submit</Text>
-                            </Pressable>
-                            
-                        </View>
-                        </View>
-                    </Modal>
-                </View>
-                    <FlatList
-                    style={styles.commentsContainer}
-                    data={listState}
-                    renderItem={({item}) =>
-                        <Comment comment={item} />
-                    }
-                    keyExtractor={(item, index) => index.toString()}
-                />
-                <StatusBar style="auto" />
+        <View style={styles.container}> 
+            <View style={styles.promptContainer}>
+                <Text style={styles.text}>{prompt}
+                {"\n"}
+                {"\n"}
+                <Text style={styles.hashtags}>{hashtags}</Text>
+                </Text>
+                <Pressable
+                    disabled={disabled}
+                    backgroundColor= {"#2196F3"}
+                    style={{
+                        borderRadius: 20,
+                        padding: 10,
+                        elevation: 2,
+                        marginBottom: 20,
+                        alignSelf: "flex-end",
+                        right: 10,
+                        backgroundColor: replyColor
+                    }}
+                    onPress={() => setModalVisible(true)}
+                >
+                    <Text style={styles.textStyle}>Reply</Text>
+                </Pressable>           
             </View>
+            <View style={styles.centeredView}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <TextInput
+                        style={styles.input}
+                        placeholder={"Share your thoughts!"}
+                        onChangeText={onChangeText}
+                        value={text}
+                        multiline = {true}
+                        numberOfLines = {10}
+                        maxLength={255}
+                        />
+                        <Pressable
+                        style={[styles.button, styles.buttonClose]}
+                        onPress={() =>disableReply(text, username)}
+                        >
+                        <Text style={styles.textStyle}>Submit</Text>
+                        </Pressable>
+                        
+                    </View>
+                    </View>
+                </Modal>
+            </View>
+                <FlatList
+                style={styles.commentsContainer}
+                data={listState}
+                renderItem={({item}) =>
+                    <Comment comment={item} />
+                }
+                keyExtractor={(item, index) => index.toString()}
+            />
+            <StatusBar style="auto" />
+        </View>
     );
 };
 export default Topic;

@@ -25,8 +25,8 @@ const PromptList = ({navigation}) => {
     return (
             
             <View style={styles.container}> 
-                    <Text style={styles.usernameStyle}>Username: {username}</Text>
-                    <Text style={styles.title}>Prompts:</Text>
+                <Text style={styles.title}>PROMPTU</Text>
+                <Text style={styles.usernameStyle}>Welcome, {username} </Text>
                 <FlatList
                 data={prompts}
                 renderItem={({item}) => 
