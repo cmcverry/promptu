@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, FlatList, StatusBar, Pressable} from 'react-native';
-import styles from './styles';
-import Prompt from '../Prompt';
+import styles from './PromptListStyles';
+import Prompt from '../Prompt/Prompt';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
-import fb from '../../setup.js';
+import fb from '../../authSetup.js';
 import { getAuth} from "firebase/auth";
 
 const db = getFirestore(fb);

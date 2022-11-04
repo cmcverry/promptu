@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {Pressable, Alert, View, Text, FlatList, StatusBar, Modal, TextInput } from 'react-native';
-import styles from './styles';
+import styles from './TopicStyles';
 import Comment from '../Comment/Comment'
 import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc} from 'firebase/firestore';
-import fb from '../../setup.js';
+import fb from '../../authSetup.js';
 import { getAuth} from "firebase/auth";
 
 const db = getFirestore(fb);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import styles from './styles';
+import styles from './PromptStyles';
 
 const Prompt = (props) => {
     const {prompt, hashtags} = props.prompt;
