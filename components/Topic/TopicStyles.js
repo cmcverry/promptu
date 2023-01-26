@@ -2,21 +2,30 @@ import { StyleSheet, Dimensions} from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-      backgroundColor: '#637CAC',
+      backgroundColor: '#0C69EC',
       height: '100%'
+  },
+
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '75%',
+
   },
 
   promptContainer: {
       marginTop: 5,
-      backgroundColor: 'white',
-      marginBottom: 10,
-      height: Dimensions.get('window').height * .2,
-      width: Dimensions.get('window').width * .7,
+      backgroundColor: 'lightgray',
+      paddingTop: 5,
+      width: Dimensions.get('window').width * .9,
+      maxWidth: 1000,
       borderWidth: 2,
       borderRadius: 20,
       justifyContent: 'center',
       alignSelf: 'center',
-      flexDirection: 'row',
+      flexDirection: 'column',
       shadowColor: "#000000",
       shadowOpacity: 0.8,
       shadowRadius: 2,
@@ -36,11 +45,14 @@ const styles = StyleSheet.create({
   },
     
   text: {
+      width: Dimensions.get('window').width * .8,
+      maxWidth: 1000 *.85,
       fontFamily: 'monospace',
       fontSize: 14,
       padding: 10,
+      paddingTop: 20,
       fontWeight: '500',
-      alignSelf: 'center',
+      alignSelf: 'left',
       flex: 1,
       flexWrap: 'wrap'
   },
@@ -58,12 +70,14 @@ const styles = StyleSheet.create({
     elevation: 2,
     marginBottom: 20,
     alignSelf: "flex-end",
+    backgroundColor: '#3570C2',
     right: 10
   },
 
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#3570C2",
   },
+  
   
   textStyle: {
     color: "white",
@@ -85,10 +99,11 @@ const styles = StyleSheet.create({
 
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "lightgray",
     borderRadius: 20,
     padding: 35,
     width: Dimensions.get('window').width * .9,
+    maxWidth: 900,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -105,7 +120,8 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    width: Dimensions.get('window').width * .7, height:200, textAlignVertical: 'top'
+    width: Dimensions.get('window').width * .7, height:200, textAlignVertical: 'top',
+    maxWidth: 900 * .8,
   }
 });
 

@@ -3,11 +3,11 @@ import {Pressable, Alert, View, Text, FlatList, StatusBar, Modal, TextInput } fr
 import styles from './TopicStyles';
 import Comment from '../Comment/Comment'
 import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc} from 'firebase/firestore';
+import { LinearGradient } from 'expo-linear-gradient';
 import fb from '../../authSetup.js';
 import { getAuth} from "firebase/auth";
 
 const db = getFirestore(fb);
-
 
 const Topic = ({ route }) => {
     
@@ -24,30 +24,30 @@ const Topic = ({ route }) => {
     const [firstLoad, setIsLoading] = useState(true);
     const [disabled, setDisabled] = useState(false);
     const [listState, setList] = useState([]);
-    const [replyColor, setReplyColor] = useState("#2196F3");
+    const [replyColor, setReplyColor] = useState('#3570C2');
 
 
     // Disables reply button for 5 seconds after user submit's a comment
     const disableReply = (text, username) => {
         addComment(text, username);
-        setReplyColor("#808080");
+        setReplyColor("#707A89");
         setDisabled(true);
-        setTimeout(() => {setDisabled(false); setReplyColor("#2196F3");}, 5000);
+        setTimeout(() => {setDisabled(false); setReplyColor("#3570C2");}, 5000);
         setModalVisible(!modalVisible);
     };
 
     // Retrieves all comments for a prompt
     const getComments = async (listId) => {
         const commentsPath = "comments/prompt"+listId+"/userComments";
-
         setList([]);
-        
         let comments = [];
+
         const snapshot = await getDocs(collection(db, commentsPath));
         snapshot.forEach((doc) => {
             let commentId = doc.id;
             comments.push({...doc.data(), commentId, listId})
         });
+
         if (comments == []) {
             const badgeLimitPath = "users/"+auth.currentUser.uid+"/badgeLimit";
             const badgeLimitRef = doc(db, badgeLimitPath, listId.toString());
@@ -59,6 +59,7 @@ const Topic = ({ route }) => {
                 });
             }
         }
+
         setIsLoading(false);
         setList(...listState, comments) 
     };
@@ -67,6 +68,7 @@ const Topic = ({ route }) => {
     //Handles textinput and adds new comment to database
     const addComment = async (text, name) => {
         let newCommentId = "";
+
         if (!text) {
             Alert.alert("You entered nothing");
         } else {
@@ -85,6 +87,7 @@ const Topic = ({ route }) => {
             setList([...listState, {username: name, upvotes: 0, bestBadges: 0, 
             worstBadges: 0, body: text, commentId: newCommentId, listId: listId, consecUpvotes: 0, consecDownvotes: 0}]);
         }
+
         onChangeText("")
     };
 
@@ -98,6 +101,10 @@ const Topic = ({ route }) => {
 
     return (
         <View style={styles.container}> 
+            <LinearGradient
+                colors={['rgba(236,143,12,0.8)', 'transparent']}
+                style={styles.background}
+            />
             <View style={styles.promptContainer}>
                 <Text style={styles.text}>{prompt}
                 {"\n"}
@@ -106,19 +113,20 @@ const Topic = ({ route }) => {
                 </Text>
                 <Pressable
                     disabled={disabled}
-                    backgroundColor= {"#2196F3"}
                     style={{
                         borderRadius: 20,
-                        padding: 10,
+                        paddingTop: 10,
+                        paddingRight: 20,
+                        paddingBottom: 10,
+                        paddingLeft: 20,
                         elevation: 2,
-                        marginBottom: 20,
-                        alignSelf: "flex-end",
-                        right: 10,
+                        marginBottom: 15,
+                        alignSelf: "center",
                         backgroundColor: replyColor
                     }}
                     onPress={() => setModalVisible(true)}
                 >
-                    <Text style={styles.textStyle}>Reply</Text>
+                    <Text style={styles.textStyle}>New Comment</Text>
                 </Pressable>           
             </View>
             <View style={styles.centeredView}>
@@ -132,20 +140,21 @@ const Topic = ({ route }) => {
                 >
                     <View style={styles.centeredView}>
                     <View style={styles.modalView}>
+                        <Text>Post a comment:</Text>
                         <TextInput
-                        style={styles.input}
-                        placeholder={"Share your thoughts!"}
-                        onChangeText={onChangeText}
-                        value={text}
-                        multiline = {true}
-                        numberOfLines = {10}
-                        maxLength={255}
+                            style={styles.input}
+                            placeholder={"Share your thoughts!"}
+                            onChangeText={onChangeText}
+                            value={text}
+                            multiline = {true}
+                            numberOfLines = {10}
+                            maxLength={1000}
                         />
                         <Pressable
-                        style={[styles.button, styles.buttonClose]}
-                        onPress={() =>disableReply(text, username)}
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() =>disableReply(text, username)}
                         >
-                        <Text style={styles.textStyle}>Submit</Text>
+                            <Text style={styles.textStyle}>Submit</Text>
                         </Pressable>
                         
                     </View>
@@ -153,13 +162,13 @@ const Topic = ({ route }) => {
                 </Modal>
             </View>
                 <FlatList
-                style={styles.commentsContainer}
-                data={listState}
-                renderItem={({item}) =>
-                    <Comment comment={item} />
-                }
-                keyExtractor={(item, index) => index.toString()}
-            />
+                    style={styles.commentsContainer}
+                    data={listState}
+                    renderItem={({item}) =>
+                        <Comment comment={item} />
+                    }
+                    keyExtractor={(item, index) => index.toString()}
+                />
             <StatusBar style="auto" />
         </View>
     );

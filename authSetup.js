@@ -12,26 +12,13 @@ const fb = initializeApp(firebaseConfig);
 export default fb;
 
 const db = getFirestore(fb);
-
 // Anonymous authenticate user
 const auth = getAuth();
 
+// Checks for new user 
+// If so, performs anonymous authentication and assigns random display name to user
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const user = auth.currentUser;
-
-    if (!user.displayName) {
-      const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals] });
-      updateProfile(user, {
-        displayName: randomName
-      }).then(() => {
-        setDoc(doc(db, "users", user.uid), {
-          username: user.displayName,
-        });
-      }).catch((error) => {
-      });
-    }
-  } else {
+  if (!user) {
     signInAnonymously(auth)
   .then(() => {
     const user = auth.currentUser;
@@ -45,10 +32,12 @@ onAuthStateChanged(auth, (user) => {
           username: user.displayName,
     });
       }).catch((error) => {
+        console.log(error)
       });
     }
   })
   .catch((error) => {
+    console.log(error)
   });
   }
 });

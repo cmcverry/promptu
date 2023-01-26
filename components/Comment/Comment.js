@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import {View, Text, TouchableOpacity, Modal, Pressable} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {View, Text, TouchableOpacity, Modal, Pressable, TextInput} from 'react-native';
 import { getAuth } from "firebase/auth";
 import styles from './CommentStyles';
 import fb from '../../authSetup.js';
-import { getFirestore, doc, getDoc, updateDoc, setDoc, increment } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, updateDoc, setDoc, increment, deleteDoc } from 'firebase/firestore';
 import { AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 
 const db = getFirestore(fb);
@@ -17,23 +17,34 @@ const Comment = (props) => {
     const displayName = auth.currentUser.displayName;
 
     // React Hooks
-    const [counter, setCounter] = useState(upvotes)
-    const [bestBadgeCounter, setBestBadgeCounter] = useState(bestBadges)
-    const [worstBadgeCounter, setWorstBadgeCounter] = useState(worstBadges)
+    const [counter, setCounter] = useState(upvotes);
+    // const [bodyText, setBodyText] = useState(body);
+    const [bestBadgeCounter, setBestBadgeCounter] = useState(bestBadges);
+    const [worstBadgeCounter, setWorstBadgeCounter] = useState(worstBadges);
     const [decremented, setDecremented] = useState(false);
     const [incremented, setIncremented] = useState(false);
     const [bestBadgeincremented, setBestBadgeIncremented] = useState(false);
     const [worstBadgeincremented, setWorstBadgeIncremented] = useState(false);
     const [shouldShow, setShouldShow] = useState(true);
-    const [modalVisible, setModalVisible] = useState(false);
     const [goodBadge, showGoodBadge] = useState(false);
     const [badBadge, showBadBadge] = useState(false);
     const [fireBadge, showFireBadge] = useState(false);
     const [downTrendBadge, showDownTrendBadge] = useState(false);
+    const [owner, setOwner] = useState(false);
+    const [trashConfirm, showTrashConfirm] = useState(false);
+    const [giveAwards, showGiveAwards] = useState(false);
+    const [deletedComment, setDeletedComment] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [text, onChangeText] = useState(body);
 
-    // Adds (you) identifier string to current user's comments 
-    if (username == displayName) {
-        username = username + " (you)";
+    // Adds '(you)' identifier string to current user's own comments 
+    const checkOwner = async () => {
+        if (username === displayName) {
+            // showTrashbin(true);
+            // showAwardButton(false);
+            setOwner(true);
+           
+        }
     }
   
     // Checks for comments toggled as hidden by current user
@@ -69,9 +80,30 @@ const Comment = (props) => {
         }    
     }
 
-    // called everytime a comment is rendered
-    checkBadges(); 
-    checkComment();
+
+    // User action: delete a comment
+    const deleteComment = async () => {
+        const commentPath = "comments/prompt"+listId+"/userComments";
+        await deleteDoc(doc(db, commentPath, commentId));
+        showTrashConfirm(false);
+        setDeletedComment(true);
+        setBestBadgeCounter(null);
+        setWorstBadgeCounter(null);
+        return
+    }
+
+
+    //User action: edit a comment
+    const editComment = async (text) => {
+        const commentPath = "comments/prompt"+listId+"/userComments";
+        const commentRef = doc(db, commentPath, commentId);
+        await updateDoc(commentRef, {
+            body: text
+        });
+        setModalVisible(false);
+        return
+    }
+
 
     // User action: toggles a comment to be hidden
     const hideComment = async () => {
@@ -164,7 +196,7 @@ const Comment = (props) => {
         let badgeData = badgeSnap.data();
         if(bestBadgeincremented || badgeData.bestBadge == true || badgeLimitData.usedBestBadge == true){
 
-            return setModalVisible(!modalVisible)
+            return showGiveAwards(!giveAwards)
         } else {
                 setBestBadgeIncremented(true)
                 await updateDoc(badgeRef, {bestBadge: true});
@@ -174,7 +206,7 @@ const Comment = (props) => {
                 showGoodBadge(true);
         }
 
-        return setModalVisible(!modalVisible)
+        return showGiveAwards(!giveAwards)
 
     }
 
@@ -209,7 +241,7 @@ const Comment = (props) => {
         let badgeData = badgeSnap.data();
         if(worstBadgeincremented || badgeData.worstBadge == true || badgeLimitData.usedWorstBadge){
 
-            return setModalVisible(!modalVisible)
+            return showGiveAwards(!giveAwards)
         } else {
                 setWorstBadgeIncremented(true)
                 await updateDoc(badgeRef, {upvoted: true});
@@ -218,7 +250,7 @@ const Comment = (props) => {
                 setWorstBadgeCounter(worstBadgeCounter + 1);
                 showBadBadge(true);
         }
-        return setModalVisible(!modalVisible)
+        return showGiveAwards(!giveAwards)
     }
 
     // User action: decrements comment's vote count
@@ -258,8 +290,49 @@ const Comment = (props) => {
         }
     }
 
+    useEffect(() => {
+        checkBadges(); 
+        checkComment();
+        checkOwner();
+    }, [])
+
     return (
-        <View style={styles.commentContainer}>
+        <View>
+            <View style={styles.centeredView}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text>Edit this comment:</Text>
+                            <TextInput
+                            style={styles.input}
+                            // placeholder={body}
+                            onChangeText={onChangeText}
+                            value={text}
+                            multiline = {true}
+                            numberOfLines = {10}
+                            maxLength={1000}
+                            />
+                            <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() =>editComment(text)}
+                            >
+                            <Text style={styles.textStyle}>Submit</Text>
+                            </Pressable>
+                            
+                        </View>
+                        </View>
+                    </Modal>
+                </View>
+
+
+         { !deletedComment ? ( <View style={styles.commentContainer}>
             
             {shouldShow ? (
             <View style={styles.voteButtons}>
@@ -286,7 +359,13 @@ const Comment = (props) => {
             {shouldShow ? (
             <View style={{flex: 1}}>
                 <Text style={styles.commentText}>
-                    <Text style={styles.userText}>{username}</Text>
+                    {owner ? (
+                        <View style={styles.userContainer}>
+                            <Text style={styles.userText}>{username}</Text>
+                            <Ionicons name='person-circle-outline' size={18} />
+                        </View>
+
+                    ): <Text style={styles.userText}>{username}</Text>}
                     {"\n"}
                     <View style={styles.badgeContainer}>
                         {fireBadge ? (
@@ -300,7 +379,7 @@ const Comment = (props) => {
                     {downTrendBadge ? (
                     <View style={styles.badgeInnerContainer}>
                         <View style={styles.badge}>
-                        <Ionicons name='trending-down' size={18} color="red"/>
+                        <Ionicons name='trending-down' size={18} color="black"/>
                         </View>
                     </View>
         
@@ -308,7 +387,7 @@ const Comment = (props) => {
                     {goodBadge ? (
                     <View style={styles.badgeInnerContainer}>
                         <View style={styles.badge}>
-                        <AntDesign name='Trophy' size={18} color="gold"/>
+                        <Ionicons name='thumbs-up-outline' size={18} color="black"/>
                         </View>
                         <View style={styles.badgeCount}> 
                             <Text style={styles.badgeStyle}>x{bestBadgeCounter}</Text>
@@ -319,7 +398,7 @@ const Comment = (props) => {
                     {badBadge ? (
                     <View style={styles.badgeInnerContainer}>
                         <View style={styles.badge}>
-                            <Entypo name='medal' size={18} color="black"/>
+                            <Ionicons name='thumbs-down-outline' size={18} color="black"/>
                         </View>
                         <View style={styles.badgeCount}> 
                             <Text style={styles.badgeStyle}>x{worstBadgeCounter}</Text>
@@ -329,62 +408,68 @@ const Comment = (props) => {
                     </View>
                     {"\n"}
                     {"\n"}
-                    <Text style={styles.bodyText}>{body}</Text>
+                    <Text style={styles.bodyText}>{text}</Text>
                 </Text>
              </View>
 
             ): null}
             
-            <View style={styles.centeredView}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                    }}
-                >
-                <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={incrementBestBadge}
-                    >
-                    <Text style={styles.textStyle}>Give this comment a trophy for being awesome!</Text>
-                    </Pressable>
-                    <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={incrementWorstBadge}
-                    >
-                    <Text style={styles.textStyle}>Give this comment the medal of shame!</Text>
-                    </Pressable>
-                    <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() =>setModalVisible(!modalVisible)}
-                    >
-                    <Text style={styles.textStyle}>Close</Text>
-                    </Pressable>
-                </View>
-                </View>
-                </Modal>
-            </View>
-      
-            {shouldShow ? (
-            <View style={styles.badgeButton}>
-                <TouchableOpacity  onPress={() => setModalVisible(true)}>
-                    <AntDesign name='gift' size={18}/>
-                </TouchableOpacity>
-            </View>
-            ): null}
-               
-
             <View style={styles.flagButton}>
                 <TouchableOpacity onPress={() => hideComment()}>
                     <Entypo name='eye-with-line' size={18}/>
-                </TouchableOpacity>   
+                </TouchableOpacity> 
+
+            {(shouldShow && !owner) ? (
+            <View style={styles.badgeButton}>
+                <TouchableOpacity  onPress={() => showGiveAwards(!giveAwards)}>
+                    <AntDesign name='gift' size={18}/>
+                </TouchableOpacity>
+                {(giveAwards) ? (
+                    <View style={styles.awardInterface}>
+                         <Pressable onPress={() => showGiveAwards(!giveAwards)} style={styles.exitAwardsButton}>
+                            <Text>X</Text>
+                        </Pressable>
+                        <Text>Award a badge</Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Pressable style={styles.awardBadgeButtons} onPress={incrementBestBadge}>
+                                <Ionicons name='thumbs-up-outline' size={18} color="black"/>
+                            </Pressable>
+                            <Pressable style={styles.awardBadgeButtons} onPress={incrementWorstBadge}>
+                                <Ionicons name='thumbs-down-outline' size={18} color="black"/>
+                            </Pressable>
+                        </View>
+                    </View>
+                ) : null }
+            </View>
+            ): null}  
+
+            {(shouldShow && owner) ? ( 
+            <View style={styles.trashContainer}>
+               <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                    <Ionicons name="pencil-outline" size={17}/>
+                </TouchableOpacity>
+            </View>
+            ): null }
+
+            {(shouldShow && owner) ? ( 
+            <View style={styles.trashContainer}>
+               <TouchableOpacity onPress={() => showTrashConfirm(!trashConfirm)}>
+                    <Ionicons name="trash-outline" size={18}/>
+                </TouchableOpacity>
+                {(trashConfirm) ? (
+                    <View style={styles.trashInterface}>
+                        <Text style={{color:'red'}}>Delete this comment?</Text>
+                        <Pressable style={styles.cancelTrash} onPress={() => deleteComment()}><Text style={styles.trashButtonText}>YES</Text></Pressable>
+                        <Pressable style={styles.confirmTrash} onPress={() => showTrashConfirm(!trashConfirm)}><Text style={styles.trashButtonText}>NO</Text></Pressable>
+                    </View>
+                ) : null }
+            </View>
+            ): null }
 
             </View>         
         </View>
+        ) : null }
+    </View>
     );
 };
 

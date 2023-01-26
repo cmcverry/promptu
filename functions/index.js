@@ -71,7 +71,7 @@ exports.scheduledResetDB = functions.pubsub.schedule("0 0 * * *")
             }
 
             let i = 0;
-            while (i < 5) {
+            while (i < prompts.length) {
               deleteCollection(database, "comments/prompt"+i.toString()+
               "/userComments", 255);
               database.collection("prompts").doc(i.toString())

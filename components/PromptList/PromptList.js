@@ -3,6 +3,7 @@ import {View, Text, FlatList, StatusBar, Pressable} from 'react-native';
 import styles from './PromptListStyles';
 import Prompt from '../Prompt/Prompt';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { LinearGradient } from 'expo-linear-gradient';
 import fb from '../../authSetup.js';
 import { getAuth} from "firebase/auth";
 
@@ -20,18 +21,26 @@ onSnapshot(promptsRef, (snapshot) => {
 const PromptList = ({navigation}) => {
     const auth = getAuth();
     const username = auth.currentUser.displayName
-    console.log(username)
 
-    return (
-            
-            <View style={styles.container}> 
-                <Text style={styles.title}>PROMPTU</Text>
-                <Text style={styles.usernameStyle}>Welcome, {username} </Text>
+    return (      
+            <View style={styles.container}>
+                {/* <Text style={styles.title}>PROMPTU</Text> */}
+                <LinearGradient
+                    colors={['rgba(236,143,12,0.8)', 'transparent']}
+                    style={styles.background}
+                />
+                <View style={styles.topTextContainer}>
+                    <Text style={styles.promptlistText}>Your display name:</Text >
+                    <Text style={styles.username}>{username}</Text>
+                    <Text style={styles.promptlistText}>Select a prompt and join in on the discussion!</Text>
+                </View>
                 <FlatList
                 data={prompts}
                 renderItem={({item}) => 
-                    <Pressable onPress={()=> navigation.navigate("Topic", item)}>
-                    <Prompt prompt={item} /></Pressable>
+
+                    <Pressable onPress={()=> navigation.navigate("Discuss the Prompt", item)}>
+                        <Prompt prompt={item} />
+                    </Pressable>
                 } 
                 keyExtractor={(item, index) => index.toString()}
                 />
