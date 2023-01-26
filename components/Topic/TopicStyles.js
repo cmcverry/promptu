@@ -101,28 +101,35 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "lightgray",
     borderRadius: 20,
+    borderWidth: 2,
+    borderColor: 'black',
     padding: 35,
     width: Dimensions.get('window').width * .9,
     maxWidth: 900,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
-      height: 2
+      width: 3,
+      height: 3
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 5
   },
 
   input: {
+    backgroundColor: '#DBDDDE',
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
     width: Dimensions.get('window').width * .7, height:200, textAlignVertical: 'top',
     maxWidth: 900 * .8,
-  }
+  },
+
+  commentButtonsContainer: {
+    flexDirection: 'row',
+  },
 });
 
 export default styles; 

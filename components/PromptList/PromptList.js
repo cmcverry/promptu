@@ -4,10 +4,9 @@ import styles from './PromptListStyles';
 import Prompt from '../Prompt/Prompt';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
 import { LinearGradient } from 'expo-linear-gradient';
-import fb from '../../authSetup.js';
+import {db, auth} from '../../setup.js';
 import { getAuth} from "firebase/auth";
 
-const db = getFirestore(fb);
 const promptsRef = collection(db, "prompts");
 
 let prompts = [];
@@ -19,7 +18,7 @@ onSnapshot(promptsRef, (snapshot) => {
     })
 
 const PromptList = ({navigation}) => {
-    const auth = getAuth();
+    // const auth = getAuth();
     const username = auth.currentUser.displayName
 
     return (      

@@ -61,7 +61,6 @@ exports.scheduledResetDB = functions.pubsub.schedule("0 0 * * *")
 
       const prompts = [];
       // Retrieves AI-generated prompts from my prompt-gatherer microservice
-      // const url = "https://python-http-function-3vg2ahuqca-ue.a.run.app";
       axios.get(promptGathererUrl.url)
           .then(function(response) {
             const data = response.data;

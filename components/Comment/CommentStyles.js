@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     // textAlign: 'center',
     marginBottom: 2,
     borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     borderWidth: 1,
     borderColor: 'black'
 
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'black',
     borderRadius: 20,
-    width: 180,
+    width: 90,
     right: 20,
     top: -45
   },
@@ -193,10 +193,10 @@ const styles = StyleSheet.create({
   },
 
   exitAwardsButton: {
-    left: 60,
+    left: 30,
     paddingRight: 3,
     paddingLeft: 3,
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 20
@@ -254,13 +254,18 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    backgroundColor: '#DBDDDE',
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
     width: Dimensions.get('window').width * .7, height:200, textAlignVertical: 'top',
     maxWidth: 900 * .8
-  }
+  },
+
+  commentButtonsContainer: {
+    flexDirection: 'row',
+  },
 
     
 });

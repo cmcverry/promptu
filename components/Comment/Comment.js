@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {View, Text, TouchableOpacity, Modal, Pressable, TextInput} from 'react-native';
 import { getAuth } from "firebase/auth";
 import styles from './CommentStyles';
-import fb from '../../authSetup.js';
+import {fb, db, auth} from '../../setup.js';
 import { getFirestore, doc, getDoc, updateDoc, setDoc, increment, deleteDoc } from 'firebase/firestore';
 import { AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 
-const db = getFirestore(fb);
+// const db = getFirestore(firebase);
 
 const Comment = (props) => {
     // props passed from Topic
     let {username, upvotes, bestBadges, worstBadges, body, commentId, listId} = props.comment;
 
     // Retrieve's username of current user
-    const auth = getAuth();
+    // const auth = getAuth();
     const displayName = auth.currentUser.displayName;
 
     // React Hooks
@@ -102,6 +102,12 @@ const Comment = (props) => {
         });
         setModalVisible(false);
         return
+    }
+
+    //User action: cancel comment edit
+    const cancelEdit = () => {
+        setModalVisible(false);
+        onChangeText(body);
     }
 
 
@@ -312,19 +318,26 @@ const Comment = (props) => {
                             <Text>Edit this comment:</Text>
                             <TextInput
                             style={styles.input}
-                            // placeholder={body}
                             onChangeText={onChangeText}
                             value={text}
                             multiline = {true}
                             numberOfLines = {10}
                             maxLength={1000}
                             />
+                        <View style={styles.commentButtonsContainer}>
                             <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() =>editComment(text)}
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => cancelEdit()}
                             >
-                            <Text style={styles.textStyle}>Submit</Text>
+                                <Text style={styles.textStyle}>Cancel</Text>
                             </Pressable>
+                            <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() =>editComment(text)}
+                            >
+                                <Text style={styles.textStyle}>Edit</Text>
+                            </Pressable>
+                        </View>
                             
                         </View>
                         </View>
@@ -429,7 +442,6 @@ const Comment = (props) => {
                          <Pressable onPress={() => showGiveAwards(!giveAwards)} style={styles.exitAwardsButton}>
                             <Text>X</Text>
                         </Pressable>
-                        <Text>Award a badge</Text>
                         <View style={{flexDirection: 'row'}}>
                             <Pressable style={styles.awardBadgeButtons} onPress={incrementBestBadge}>
                                 <Ionicons name='thumbs-up-outline' size={18} color="black"/>

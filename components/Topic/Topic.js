@@ -4,10 +4,9 @@ import styles from './TopicStyles';
 import Comment from '../Comment/Comment'
 import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc} from 'firebase/firestore';
 import { LinearGradient } from 'expo-linear-gradient';
-import fb from '../../authSetup.js';
+import {db, auth} from '../../setup.js';
 import { getAuth} from "firebase/auth";
 
-const db = getFirestore(fb);
 
 const Topic = ({ route }) => {
     
@@ -15,7 +14,7 @@ const Topic = ({ route }) => {
     const { prompt, hashtags, listId } = route.params;
 
     // Retrieve's username of current user
-    const auth = getAuth();
+    // const auth = getAuth();
     const username = auth.currentUser.displayName;
 
     // React hooks
@@ -35,6 +34,11 @@ const Topic = ({ route }) => {
         setTimeout(() => {setDisabled(false); setReplyColor("#3570C2");}, 5000);
         setModalVisible(!modalVisible);
     };
+
+    const cancelComment = () => {
+        setModalVisible(!modalVisible);
+        onChangeText("");
+    }
 
     // Retrieves all comments for a prompt
     const getComments = async (listId) => {
@@ -126,7 +130,7 @@ const Topic = ({ route }) => {
                     }}
                     onPress={() => setModalVisible(true)}
                 >
-                    <Text style={styles.textStyle}>New Comment</Text>
+                    <Text style={styles.textStyle}>Comment</Text>
                 </Pressable>           
             </View>
             <View style={styles.centeredView}>
@@ -150,12 +154,20 @@ const Topic = ({ route }) => {
                             numberOfLines = {10}
                             maxLength={1000}
                         />
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() =>disableReply(text, username)}
-                        >
-                            <Text style={styles.textStyle}>Submit</Text>
-                        </Pressable>
+                        <View style={styles.commentButtonsContainer}>
+                            <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => cancelComment()}
+                            >
+                                <Text style={styles.textStyle}>Cancel</Text>
+                            </Pressable>
+                            <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() =>disableReply(text, username)}
+                            >
+                                <Text style={styles.textStyle}>Submit</Text>
+                            </Pressable>
+                        </View>
                         
                     </View>
                     </View>

@@ -1,10 +1,55 @@
-import {View, Text, Pressable} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import styles from './HomeStyles';
 import { LinearGradient } from 'expo-linear-gradient';
+import {db} from '../../setup';
+import { getAuth, signInAnonymously, onAuthStateChanged, updateProfile } from "firebase/auth";
+import {setDoc, doc } from 'firebase/firestore';
+import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
 
 
-const Home = ({navigation}, props) => {
+const Home = ({navigation}) => {
+
+    const auth = getAuth();
+    // const [setupState, setSetupState] = useState(true);
+    const [username, setUsername] = useState(null)
+
+    useEffect(() => {
+
+        // Auth state listener
+        // Checks for unauthenticated users
+        // If so, performs anonymous authentication and assigns random display name to user
+        onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            signInAnonymously(auth)
+        .then(() => {
+            const user = auth.currentUser;
+
+            if (!user.displayName) {
+            const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals] });
+            updateProfile(user, {
+                displayName: randomName
+            }).then(() => {
+                setDoc(doc(db, "users", user.uid), {
+                username: user.displayName,
+            });
+            }).catch((error) => {
+                console.log(error)
+            });
+            }
+            setTimeout(() => {setUsername(user.displayName)}, 1500);
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+        }
+        else {
+            setTimeout(() => {setUsername(user.displayName)}, 1500);
+        }
+        });
+        // setSetupState(false);
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -12,19 +57,30 @@ const Home = ({navigation}, props) => {
                 colors={['rgba(236,143,12,0.8)', 'transparent']}
                 style={styles.background}
             />
-            <Text style={styles.title}>PROMPTU</Text>
-            <Text style={styles.sub}>
-                Welcome to Promptu, a prompt-based anonymous message board!
-                {"\n"}
-                {"\n"}
-                Woohoo! A display name has been automatically generated and assigned to you. You are good to go!
-                {"\n"}
-                {"\n"}
-            </Text>
-            <Pressable onPress={ async ()=> navigation.navigate("Today's Prompts")}>
-                <Text style={styles.continueButton}>Continue to Prompts</Text>
-            </Pressable>
-            <Text style={styles.sub}>Click continue to check out today's prompts!</Text>
+            <View style={styles.containerContent}>
+                <Text style={styles.title}>PROMPTU</Text>
+                <Text style={styles.sub}>
+                    Welcome to Promptu, a prompt-based anonymous message board!
+                    {"\n"}
+                </Text>
+                { !username ? (
+                    <Text style={styles.sub}> Setting up... </Text>
+                ): <View style={styles.postSetup}>
+                    <Text style={styles.sub}>
+                        A display name has been generated and assigned to you.
+                        {"\n"}
+                        {"\n"}
+                        Your are: <Text style={styles.username}>{username}</Text>.
+                        {"\n"}
+                    </Text>
+                    <TouchableOpacity onPress={()=> navigation.navigate("Today's Prompts")}>
+                        <Text style={styles.continueButton}>Continue to Prompts</Text>
+                    </TouchableOpacity>
+                </View>
+                }
+            </View>
+        
+            {/* <Text style={styles.sub}>Click Continue to check out today's prompts!</Text> */}
             <StatusBar style="auto" />
         </View>
     );
