@@ -3,7 +3,6 @@ import { StyleSheet, Dimensions, Platform} from "react-native";
 const styles = StyleSheet.create({
 
     commentContainer: {
-        marginBottom: 5,
         backgroundColor: 'lightgray',
         width: Dimensions.get('window').width * .9,
         maxWidth: 800,
@@ -14,15 +13,14 @@ const styles = StyleSheet.create({
     },
     
     voteButtons: {
-        marginLeft: 10,
+        marginLeft: 5,
         alignSelf: 'center',
         flexDirection: 'column',
     },
 
     voteCount: {
-        marginRight: 10,
+        marginRight: 5,
         alignSelf: "center",
-
     },
 
     voteStyle: {
@@ -34,13 +32,9 @@ const styles = StyleSheet.create({
     commentText: {
         flexWrap: "wrap",
         flex: 1,
-        // marginBottom: 10,
-        // marginTop: 5,
         padding: 5,
-        // borderLeftWidth: 2,
         borderRightWidth: 2,
         borderColor: 'black',
-        paddingBottom: 50
     },
 
     userText: { 
@@ -56,15 +50,7 @@ const styles = StyleSheet.create({
         fontFamily: 'monospace',
     },
 
-    
-    badgeButton: {
-        // width: "5%",
-        // alignSelf: 'center',
-        
-    },
     flagButton: {
-        // width: "10%",
-        // margin: 10,
         marginTop: 'auto',
         marginBottom: 'auto',
         marginRight: 10,
@@ -75,6 +61,7 @@ const styles = StyleSheet.create({
     buttonClose: {
         backgroundColor: "#2196F3",
       },
+      
     textStyle: {
         color: "white",
         fontWeight: "bold",
@@ -89,16 +76,6 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         right: 10
       },
-
-      badge: {
-        // flex: 1,
-    },
-
-    badgeCount: {
-      // flex: 1,
-      // margin: 10,
-
-  },
 
   badgeStyle: {
     fontWeight: "bold",
@@ -120,9 +97,6 @@ const styles = StyleSheet.create({
   flexDirection: 'row'
   },
 
-  // trashContainer: {
-  //   flexDirection: 'row',
-  // },
 
   confirmTrash: {
     color: 'white',
@@ -144,8 +118,6 @@ const styles = StyleSheet.create({
     padding: 4,
     justifyContent: 'center',
     alignItems: 'center',
-
-    // textAlign: 'center',
     marginBottom: 2,
     borderRadius: 20,
     backgroundColor: 'lightgray',
@@ -154,7 +126,7 @@ const styles = StyleSheet.create({
 
   },
 
-  trashInterface: {
+  trashPopup: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
@@ -171,7 +143,7 @@ const styles = StyleSheet.create({
     top: -40
   },
 
-  awardInterface: {
+  awardPopup: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',

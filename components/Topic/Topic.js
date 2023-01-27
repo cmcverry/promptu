@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {Pressable, Alert, View, Text, FlatList, StatusBar, Modal, TextInput } from 'react-native';
+import {Pressable, Alert, View, Text, FlatList, StatusBar, Modal, TextInput, ScrollView } from 'react-native';
 import styles from './TopicStyles';
 import Comment from '../Comment/Comment'
-import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc} from 'firebase/firestore';
+import { collection, addDoc, getDocs, getDoc, setDoc} from 'firebase/firestore';
 import { LinearGradient } from 'expo-linear-gradient';
 import {db, auth} from '../../setup.js';
-import { getAuth} from "firebase/auth";
 
 
 const Topic = ({ route }) => {
@@ -14,7 +13,6 @@ const Topic = ({ route }) => {
     const { prompt, hashtags, listId } = route.params;
 
     // Retrieve's username of current user
-    // const auth = getAuth();
     const username = auth.currentUser.displayName;
 
     // React hooks
@@ -25,15 +23,14 @@ const Topic = ({ route }) => {
     const [listState, setList] = useState([]);
     const [replyColor, setReplyColor] = useState('#3570C2');
 
-
-    // Disables reply button for 5 seconds after user submit's a comment
+    // Disables reply button for 5 seconds after user submits a comment
     const disableReply = (text, username) => {
         addComment(text, username);
         setReplyColor("#707A89");
         setDisabled(true);
         setTimeout(() => {setDisabled(false); setReplyColor("#3570C2");}, 5000);
         setModalVisible(!modalVisible);
-    };
+    }
 
     const cancelComment = () => {
         setModalVisible(!modalVisible);
@@ -104,16 +101,17 @@ const Topic = ({ route }) => {
     }
 
     return (
-        <View style={styles.container}> 
+        <ScrollView style={styles.scrollContainer}>
             <LinearGradient
                 colors={['rgba(236,143,12,0.8)', 'transparent']}
                 style={styles.background}
             />
             <View style={styles.promptContainer}>
-                <Text style={styles.text}>{prompt}
-                {"\n"}
-                {"\n"}
-                <Text style={styles.hashtags}>{hashtags}</Text>
+                <Text style={styles.text}>
+                    {prompt}
+                    {"\n"}
+                    {"\n"}
+                    <Text style={styles.hashtags}>{hashtags}</Text>
                 </Text>
                 <Pressable
                     disabled={disabled}
@@ -143,33 +141,33 @@ const Topic = ({ route }) => {
                     }}
                 >
                     <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text>Post a comment:</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder={"Share your thoughts!"}
-                            onChangeText={onChangeText}
-                            value={text}
-                            multiline = {true}
-                            numberOfLines = {10}
-                            maxLength={1000}
-                        />
-                        <View style={styles.commentButtonsContainer}>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => cancelComment()}
-                            >
-                                <Text style={styles.textStyle}>Cancel</Text>
-                            </Pressable>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() =>disableReply(text, username)}
-                            >
-                                <Text style={styles.textStyle}>Submit</Text>
-                            </Pressable>
+                        <View style={styles.modalView}>
+                            <Text>Post a comment:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder={"Share your thoughts!"}
+                                onChangeText={onChangeText}
+                                value={text}
+                                multiline = {true}
+                                numberOfLines = {10}
+                                maxLength={1000}
+                            />
+                            <View style={styles.commentButtonsContainer}>
+                                <Pressable
+                                    style={[styles.button, styles.buttonClose]}
+                                    onPress={() => cancelComment()}
+                                >
+                                    <Text style={styles.textStyle}>Cancel</Text>
+                                </Pressable>
+                                <Pressable
+                                    style={[styles.button, styles.buttonClose]}
+                                    onPress={() =>disableReply(text, username)}
+                                >
+                                    <Text style={styles.textStyle}>Submit</Text>
+                                </Pressable>
+                            </View>
+                            
                         </View>
-                        
-                    </View>
                     </View>
                 </Modal>
             </View>
@@ -182,7 +180,7 @@ const Topic = ({ route }) => {
                     keyExtractor={(item, index) => index.toString()}
                 />
             <StatusBar style="auto" />
-        </View>
+        </ScrollView>
     );
 };
 export default Topic;

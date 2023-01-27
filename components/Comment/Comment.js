@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import {View, Text, TouchableOpacity, Modal, Pressable, TextInput} from 'react-native';
-import { getAuth } from "firebase/auth";
 import styles from './CommentStyles';
-import {fb, db, auth} from '../../setup.js';
-import { getFirestore, doc, getDoc, updateDoc, setDoc, increment, deleteDoc } from 'firebase/firestore';
+import {db, auth} from '../../setup.js';
+import { doc, getDoc, updateDoc, setDoc, increment, deleteDoc } from 'firebase/firestore';
 import { AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 
-// const db = getFirestore(firebase);
 
 const Comment = (props) => {
     // props passed from Topic
     let {username, upvotes, bestBadges, worstBadges, body, commentId, listId} = props.comment;
 
     // Retrieve's username of current user
-    // const auth = getAuth();
     const displayName = auth.currentUser.displayName;
 
     // React Hooks
     const [counter, setCounter] = useState(upvotes);
-    // const [bodyText, setBodyText] = useState(body);
     const [bestBadgeCounter, setBestBadgeCounter] = useState(bestBadges);
     const [worstBadgeCounter, setWorstBadgeCounter] = useState(worstBadges);
     const [decremented, setDecremented] = useState(false);
@@ -37,13 +33,10 @@ const Comment = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [text, onChangeText] = useState(body);
 
-    // Adds '(you)' identifier string to current user's own comments 
+    // Adjusts state of comments belonging to user 
     const checkOwner = async () => {
         if (username === displayName) {
-            // showTrashbin(true);
-            // showAwardButton(false);
-            setOwner(true);
-           
+            setOwner(true);   
         }
     }
   
@@ -110,7 +103,6 @@ const Comment = (props) => {
         onChangeText(body);
     }
 
-
     // User action: toggles a comment to be hidden
     const hideComment = async () => {
         const checkHiddenComment = doc(db, "users/"+auth.currentUser.uid+"/hidden", commentId);
@@ -132,7 +124,6 @@ const Comment = (props) => {
             }
         }
     }
-
 
     // User action: increments comment's vote count
     const incrementVote = async () => {
@@ -314,32 +305,31 @@ const Comment = (props) => {
                         }}
                     >
                         <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text>Edit this comment:</Text>
-                            <TextInput
-                            style={styles.input}
-                            onChangeText={onChangeText}
-                            value={text}
-                            multiline = {true}
-                            numberOfLines = {10}
-                            maxLength={1000}
-                            />
-                        <View style={styles.commentButtonsContainer}>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => cancelEdit()}
-                            >
-                                <Text style={styles.textStyle}>Cancel</Text>
-                            </Pressable>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() =>editComment(text)}
-                            >
-                                <Text style={styles.textStyle}>Edit</Text>
-                            </Pressable>
-                        </View>
-                            
-                        </View>
+                            <View style={styles.modalView}>
+                                <Text>Edit this comment:</Text>
+                                <TextInput
+                                style={styles.input}
+                                onChangeText={onChangeText}
+                                value={text}
+                                multiline = {true}
+                                numberOfLines = {10}
+                                maxLength={1000}
+                                />
+                                <View style={styles.commentButtonsContainer}>
+                                    <Pressable
+                                        style={[styles.button, styles.buttonClose]}
+                                        onPress={() => cancelEdit()}
+                                    >
+                                        <Text style={styles.textStyle}>Cancel</Text>
+                                    </Pressable>
+                                    <Pressable
+                                        style={[styles.button, styles.buttonClose]}
+                                        onPress={() =>editComment(text)}
+                                    >
+                                        <Text style={styles.textStyle}>Edit</Text>
+                                    </Pressable>
+                                </View>      
+                            </View>
                         </View>
                     </Modal>
                 </View>
@@ -420,7 +410,6 @@ const Comment = (props) => {
                     ): null}
                     </View>
                     {"\n"}
-                    {"\n"}
                     <Text style={styles.bodyText}>{text}</Text>
                 </Text>
              </View>
@@ -438,7 +427,7 @@ const Comment = (props) => {
                     <AntDesign name='gift' size={18}/>
                 </TouchableOpacity>
                 {(giveAwards) ? (
-                    <View style={styles.awardInterface}>
+                    <View style={styles.awardPopup}>
                          <Pressable onPress={() => showGiveAwards(!giveAwards)} style={styles.exitAwardsButton}>
                             <Text>X</Text>
                         </Pressable>
@@ -469,7 +458,7 @@ const Comment = (props) => {
                     <Ionicons name="trash-outline" size={18}/>
                 </TouchableOpacity>
                 {(trashConfirm) ? (
-                    <View style={styles.trashInterface}>
+                    <View style={styles.trashPopup}>
                         <Text style={{color:'red'}}>Delete this comment?</Text>
                         <Pressable style={styles.cancelTrash} onPress={() => deleteComment()}><Text style={styles.trashButtonText}>YES</Text></Pressable>
                         <Pressable style={styles.confirmTrash} onPress={() => showTrashConfirm(!trashConfirm)}><Text style={styles.trashButtonText}>NO</Text></Pressable>

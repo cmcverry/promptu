@@ -1,9 +1,10 @@
 import { StyleSheet, Dimensions} from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
-      backgroundColor: '#0C69EC',
-      height: '100%'
+
+  scrollContainer: {
+    backgroundColor: '#0C69EC',
+    height: '100%'
   },
 
   background: {
@@ -45,7 +46,9 @@ const styles = StyleSheet.create({
   },
     
   text: {
-      width: Dimensions.get('window').width * .8,
+      width: Dimensions.get('window').width * .85,
+      marginRight: 'auto',
+      marginLeft: 'auto',
       maxWidth: 1000 *.85,
       fontFamily: 'monospace',
       fontSize: 14,
@@ -53,7 +56,6 @@ const styles = StyleSheet.create({
       paddingTop: 20,
       fontWeight: '500',
       alignSelf: 'left',
-      flex: 1,
       flexWrap: 'wrap'
   },
 

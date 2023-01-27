@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
       },
 
       topTextContainer: {
-        zIndex: 3,
+        zIndex: 2,
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomWidth: 2,
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
       },
 
     promptlistText: {
-        zIndex: 2,
         width: '90%',
         textAlign: "center",
         padding: 10,
@@ -42,21 +42,13 @@ const styles = StyleSheet.create({
     },
 
     username: {
-        flexWrap: 'wrap',
+        width: '90%',
+        textAlign: 'center',
         fontFamily: 'monospace',
         fontSize: 22,
         color: 'white',
         marginBottom: 20,
 
-    },
-
-    title: {
-        marginTop: '1%',
-        width: '100%',
-        textAlign: "center",
-        fontFamily: 'monospace',
-        fontSize: 40,
-        fontWeight: '500'
     },
 });
 
