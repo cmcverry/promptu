@@ -1,23 +1,24 @@
-## promptu is a simple cross-platform anonymous social app 
+## Promptu a prompt-based anonymous message board that uses AI-generated prompts 
 
-### promptu supports web and Android
-### Promptu was built using [Firebase](https://firebase.google.com/) and [React Native](https://reactnative.dev/)
+### Cross-platform support for web and Android <br/> Built with [Firebase](https://firebase.google.com/), [React Native](https://reactnative.dev/), and [OpenAI's Text completion API](https://platform.openai.com/docs/guides/completion)
 
 #### Features:
 - anonymous user authentication
-- five daily prompts/comment sections
-- any user can comment on prompts
+- ten daily AI-generated discussion prompts 
+- any user can comment on a prompt
 - comments can be upvoted/downvoted
 - comments can be awarded badges from users or automatically based on recent upvote/downvote history
 - prompts and comments reset daily
 
 ## Instructions
 
-Download the APK and install it on a physical android device or emulator, or if using web visit the web url on an internet browser.
+Web URL: https://promptu-4f001.web.app/ <br/> APK Download: https://drive.google.com/file/d/1-yXQCcT44rMP3GYnsMD5rk5nwtjHyCeN/view?usp=sharing
 
-Upon being prompted for a username, enter one of your choice and click the enter button, or accept an auto-generated username and simply click enter.
+Download the APK and install it on a physical android device or emulator, or visit the web URL with an internet browser.
 
-On the prompts page, view the current five daily prompts and click one of interest.
+On the landing page the app will take a moment to setup and assign the user with a randomly generated name.
 
-On the topic page, click reply to submit your own comment to the discussion. Freely upvote/downvote other comments of your choice. Award a medal of shame and/or awesomeness to a comment of your choice.
+On the prompts page a user can view the daily prompts and click/tap one to navigate to its discussion page.
+
+On the topic page a user can click the 'comment' button to create and submit their own comment. Comments can be freely downvoted/upvoted; however, a user can only downvote/upvote each comment once. Users can award 'thumbs up' and 'thumbs down' badges to comment (limited to one comment per discussion prompt). There are also 'fire' and 'downtrend' badges that are automatically awarded to comments based on recent upvote/downvote history. 
 
