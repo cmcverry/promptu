@@ -1,4 +1,6 @@
-## Promptu a prompt-based anonymous message board that uses AI-generated prompts 
+## Promptu 
+
+a prompt-based anonymous message board that uses daily AI-generated prompts 
 
 ### Cross-platform support for web and Android <br/> Built with [Firebase](https://firebase.google.com/), [React Native](https://reactnative.dev/), and [OpenAI's Text completion API](https://platform.openai.com/docs/guides/completion)
 
